@@ -1,0 +1,54 @@
+name: CI/CD Game 
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  [cite_start]workflow_dispatch: [cite: 50, 51]
+
+jobs:
+  # PARTIE CI 
+  integration-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - [cite_start]name: Security Audit [cite: 62, 152]
+        run: npm audit
+
+      - [cite_start]name: Lint Code [cite: 60]
+        run: npx eslint .
+
+      - [cite_start]name: Run Tests [cite: 56]
+        run: node --experimental-vm-modules node_modules/jest/bin/jest.js
+
+  # PARTIE CD 
+  deploy-job:
+    [cite_start]needs: integration-job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Simulation de création d'image Docker 
+      - name: Build Docker Image
+        run: |
+          echo "Building Docker image for the web app..."
+          # docker build -t game-platform .
+
+      # Déploiement sur GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: dist 
+          [cite_start]token: ${{ secrets.GITHUB_TOKEN }}
