@@ -58,7 +58,7 @@ jobs:
           echo "Building Docker image for the web app..."
           docker build -t mon-jeu .
 
-      # Déploiement sur GitHub Pages
+      # Déploiement sur  GitHub Pages
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
