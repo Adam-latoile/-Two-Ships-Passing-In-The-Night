@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  base: '/-Two-Ships-Passing-In-The-Night$/',
+  base: './',
   build: {
     outDir: 'dist',
   },
